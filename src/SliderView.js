@@ -63,17 +63,15 @@ class SliderView extends BaseView {
     this.countItems();
     let {defaultFocusIndex = 0} = this.props;
 
-    setTimeout(() => {
-      if (defaultFocusIndex !== this.state.index) {
-        this.switchTo(defaultFocusIndex);
-      } else {
-        this.onChange({
-          index: defaultFocusIndex
-        });
-      }
+    if (defaultFocusIndex !== this.state.index) {
+      this.switchTo(defaultFocusIndex);
+    } else {
+      this.onChange({
+        index: defaultFocusIndex
+      });
+    }
 
-      this.afterSwitch();
-    }, 50);
+    this.afterSwitch();
   }
 
   onScroll = () => {

@@ -3,7 +3,7 @@
 
 'use strict';
 
-import {createElement, findDOMNode, PropTypes} from 'rax';
+import {createElement, findDOMNode, PropTypes, setNativeProps} from 'rax';
 import View from 'rax-view';
 import {isWeex} from 'universal-env';
 import binding from 'weex-bindingx';
@@ -108,11 +108,9 @@ class DefaultView extends BaseView {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.countItems();
-      let {defaultFocusIndex = 0} = this.props;
-      this.switchTo(defaultFocusIndex, {duration: 0, params: {type: 'default'}});
-    }, 0);
+    this.countItems();
+    let {defaultFocusIndex = 0} = this.props;
+    this.switchTo(defaultFocusIndex, {duration: 0, params: {type: 'default'}});
   }
 
   componentWillReceiveProps(props) {
@@ -148,6 +146,24 @@ class DefaultView extends BaseView {
     let itemWidth = this.itemWidth;
     let end = -index * itemWidth;
     const wrap = findDOMNode(this.refs.wrap);
+
+    let callback = () => {
+      this.curIndex = index;
+      afterSwitch({index, params, prevIndex});
+      this.handleScreens();
+      this.handleSwipeBack();
+    };
+
+    if (duration === 0) {
+      setNativeProps(wrap, {
+        style: {
+          transform: `translateX(${end}rem)`,
+          webkitTransform: `translateX(${end}rem)`
+        }
+      });
+      return callback();
+    }
+
     transition(wrap, {
       transform: `translateX(${end}rem)`,
       webkitTransform: `translateX(${end}rem)`
@@ -155,12 +171,7 @@ class DefaultView extends BaseView {
       timingFunction: this.props.easing,
       delay: 0,
       duration: Math.max(this.props.isSlideEnabled ? duration : 0, MIN_DURATION)
-    }, () => {
-      this.curIndex = index;
-      afterSwitch({index, params, prevIndex});
-      this.handleScreens();
-      this.handleSwipeBack();
-    });
+    }, callback);
   }
 
   bindPanExp = (anchor) => {
