@@ -43,7 +43,7 @@ class BaseView extends Component {
     let {screenNumbersPerSide} = this.props;
     let {itemCount, curIndex} = this;
     let visibleIndexes = [];
-    if (screenNumbersPerSide >= 0) {
+    if (screenNumbersPerSide === 0 || screenNumbersPerSide > 0) {
       let max = curIndex + screenNumbersPerSide > itemCount - 1 ? itemCount - 1 : curIndex + screenNumbersPerSide;
       let min = curIndex - screenNumbersPerSide < 0 ? 0 : curIndex - screenNumbersPerSide;
       for (let i = min; i < curIndex; i++) {
