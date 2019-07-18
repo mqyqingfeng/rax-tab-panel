@@ -1,33 +1,33 @@
 ## <%= answers.name%>
 <%= answers.description %>
 
-## Install
+## 安装
 
 ```
 $ npm install <%= answers.name%> --save
 ```
 
-## Import
+## 引用
 
 ```
 import RaxTabPanel from '<%= answers.name%>';
 ```
 
-## API
+## API说明
 
-### Props
+### 属性
 
 |name|type|default|describe|
 |:---------------|:--------|:----|:----------|
 |name|String|''|describe|
 
-### Function
+### 组件方法
 
 |name|param|return|describe|
 |:---------------|:--------|:----|:----------|
 |name|Object|/|describe|
 
-## Example
+## 实例
 
 ```
 import {createElement, Component, render} from 'rax';

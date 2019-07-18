@@ -2,10 +2,11 @@
 
 'use strict';
 
-import {createElement, Component, PropTypes} from 'rax';
+import {createElement, Component} from 'rax';
 import {Event as Emitter} from './Utils';
 import Detection from './Detection';
 import Link from 'rax-link';
+import PropTypes from 'rax-proptypes';
 
 class TabPanelLink extends Component {
   isPanning = false;
