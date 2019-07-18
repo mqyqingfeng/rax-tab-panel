@@ -2,7 +2,8 @@
 
 'use strict';
 
-import {createElement, Component, PropTypes} from 'rax';
+import {createElement, Component} from 'rax';
+import PropTypes from 'rax-proptypes';
 import View from 'rax-view';
 import {Event as Emitter} from './Utils';
 import Detection from './Detection';

@@ -6,7 +6,7 @@ import {createElement, Component} from 'rax';
 import DefaultView from './DefaultView';
 import SliderView from './SliderView';
 import {isWeex} from 'universal-env';
-import {noop, uuid} from './Utils';
+import {noop, uuid, combineStyle} from './Utils';
 
 
 const DURATION = 250;
@@ -73,7 +73,7 @@ class TabController extends Component {
     let props = {
       ...this.props,
       ref: 'container',
-      style: [styles.container, this.props.style],
+      style: combineStyle(styles.container, this.props.style),
       uuid: this.uuid
     };
     return useSlider && isWeex ? <SliderView {...props} /> : <DefaultView {...props} />;

@@ -1,5 +1,6 @@
 import {createElement, Component} from 'rax';
 import View from 'rax-view';
+import {combineStyle} from './Utils';
 
 const styles = {
   pageContainer: {
@@ -25,7 +26,7 @@ class TabPanel extends Component {
 
 
   render() {
-    return (<View {...this.props} style={[styles.pageContainer, this.props.style]}>
+    return (<View {...this.props} style={combineStyle(styles.pageContainer, this.props.style)}>
       {this.state.isAppear ? this.props.children : null}
     </View>);
   }

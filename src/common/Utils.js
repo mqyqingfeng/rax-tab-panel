@@ -89,6 +89,10 @@ function find(o, condition) {
   return result;
 }
 
+function combineStyle(style1, style2) {
+  return Object.assign({}, style1, style2);
+}
+
 export {
   clamp,
   resolveURL,
@@ -96,5 +100,6 @@ export {
   forbidSwipeBack,
   uuid,
   Event,
-  findIndex
+  findIndex,
+  combineStyle
 };
