@@ -36,7 +36,7 @@ const styles = {
     overflow: 'hidden',
   },
   wrap: {
-    // position: 'absolute',
+    position: 'absolute',
     flexDirection: 'row',
     top: 0,
     bottom: 0,

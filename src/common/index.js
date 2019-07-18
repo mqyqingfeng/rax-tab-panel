@@ -13,5 +13,5 @@ export default {
   TabPanelView,
   TabPanelLink,
   Detection,
-  Utils,
+  Utils
 };
