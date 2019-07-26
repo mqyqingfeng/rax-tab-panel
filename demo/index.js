@@ -1,21 +1,18 @@
 /** @jsx createElement */
-import {createElement, Component, render, createRef} from 'rax';
+import { createElement, Component, render, createRef } from 'rax';
 import findDOMNode from 'rax-find-dom-node';
 import View from 'rax-view';
 import Text from 'rax-text';
 import DU from 'driver-universal';
 
-import RaxTabPanel from '../src/index.js';
+import { TabController, TabPanel, TabPanelView, TabPanelLink } from '../src/index.js';
 import transition from 'universal-transition';
 import ScrollView from 'rax-scrollview';
-import {isWeex} from 'universal-env';
+import { isWeex } from 'universal-env';
 
 function combineStyle(style1, style2) {
   return Object.assign({}, style1, style2);
 }
-
-const {TabController, TabPanel, TabPanelView, TabPanelLink} = RaxTabPanel;
-
 
 const FULL_WIDTH = 750;
 
@@ -33,27 +30,59 @@ const styles = {
   }
 };
 let listData = [
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
-  {name1: 'tom'}, {name1: 'tom'}, {name1: 'tom'},
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' },
+  { name1: 'tom' }
 ];
 
 const tabStyles = {
   container: {
-    height: 100,
+    height: 100
   },
   scrollContent: {
     flexDirection: 'row',
@@ -78,29 +107,30 @@ const tabStyles = {
   }
 };
 
-
 const tabItemWidth = [200, 250, 400, 250, 250];
 
-const itemData = [{
-  name: 'tab1',
-  href: '//rax.alibaba-inc.com'
-}, {
-  name: 'tab2',
-  href: '//rax.alibaba-inc.com'
-},
-{
-  name: 'tab3',
-  href: '//rax.alibaba-inc.com'
-},
-{
-  name: 'tab4',
-  href: '//rax.alibaba-inc.com'
-},
-{
-  name: 'tab5',
-  href: '//rax.alibaba-inc.com'
-}];
-
+const itemData = [
+  {
+    name: 'tab1',
+    href: '//rax.alibaba-inc.com'
+  },
+  {
+    name: 'tab2',
+    href: '//rax.alibaba-inc.com'
+  },
+  {
+    name: 'tab3',
+    href: '//rax.alibaba-inc.com'
+  },
+  {
+    name: 'tab4',
+    href: '//rax.alibaba-inc.com'
+  },
+  {
+    name: 'tab5',
+    href: '//rax.alibaba-inc.com'
+  }
+];
 
 function getLeft(widths, index) {
   let left = 0;
@@ -111,23 +141,17 @@ function getLeft(widths, index) {
 }
 
 class Tab extends Component {
-
   constructor(props) {
     super(props);
     this.scroller = createRef();
     this.block = createRef();
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
-  switchTo(index, options = {duration: DURATION}) {
-    let {type, duration} = options;
-    let {
-      beforeSwitch = () => {
-      }, afterSwitch = () => {
-      }
-    } = this.props;
+  switchTo(index, options = { duration: DURATION }) {
+    let { type, duration } = options;
+    let { beforeSwitch = () => {}, afterSwitch = () => {} } = this.props;
     let block = findDOMNode(this.block.current);
     let left = getLeft(tabItemWidth, index);
     let itemWidth = tabItemWidth[index];
@@ -138,51 +162,66 @@ class Tab extends Component {
     });
 
     // 移动Block
-    transition(block, {
-      transform: `translateX(${left}rem)`,
-      webkitTransform: `translateX(${left}rem)`,
-      width: `${itemWidth}rem`
-    }, {
-      timingFunction: 'ease-out',
-      delay: 0,
-      duration: 200
-    }, () => {
-      afterSwitch({
-        index,
-        type
-      });
-    });
-    let offset = left - FULL_WIDTH / 2 + itemWidth / 2 < 0 ? 0 : left - FULL_WIDTH / 2 + itemWidth / 2;
+    transition(
+      block,
+      {
+        transform: `translateX(${left}rem)`,
+        webkitTransform: `translateX(${left}rem)`,
+        width: `${itemWidth}rem`
+      },
+      {
+        timingFunction: 'ease-out',
+        delay: 0,
+        duration: 200
+      },
+      () => {
+        afterSwitch({
+          index,
+          type
+        });
+      }
+    );
+    let offset =
+      left - FULL_WIDTH / 2 + itemWidth / 2 < 0 ? 0 : left - FULL_WIDTH / 2 + itemWidth / 2;
 
     // console.log('offset', offset)
 
-    this.scroller.current.scrollTo({x: offset});
+    this.scroller.current.scrollTo({ x: offset });
   }
-
 
   render() {
-
-    let {itemWidths, itemData} = this.props;
+    let { itemWidths, itemData } = this.props;
 
     let containerWidth = 0;
-    for (let i = 0; i < itemWidths.length;i++) {
-     containerWidth += itemWidths[i]
+    for (let i = 0; i < itemWidths.length; i++) {
+      containerWidth += itemWidths[i];
     }
 
-    return (<ScrollView {...this.props} contentContainerStyle={{width:containerWidth}} style={combineStyle({...this.props.style},{display: 'block'})} horizontal={true} ref={this.scroller}>
-      <View style={tabStyles.scrollContent}>
-        <View style={combineStyle(tabStyles.block, {width: itemWidths[0]})} ref={this.block} />
-        {itemData.map((item, i) => {
-          return (
-            <View style={combineStyle(tabStyles.item, {width: itemWidths[i]})} onClick={() => this.switchTo(i, {type: 'click'})}>
-              <Text style={tabStyles.itemTxt}>{item.name}</Text>
-            </View>);
-        })}
-      </View>
-    </ScrollView>);
+    return (
+      <ScrollView
+        {...this.props}
+        contentContainerStyle={{ width: containerWidth }}
+        style={combineStyle({ ...this.props.style }, { display: 'block' })}
+        horizontal={true}
+        ref={this.scroller}
+      >
+        <View style={tabStyles.scrollContent}>
+          <View style={combineStyle(tabStyles.block, { width: itemWidths[0] })} ref={this.block} />
+          {itemData.map((item, i) => {
+            return (
+              <View
+                style={combineStyle(tabStyles.item, { width: itemWidths[i] })}
+                onClick={() => this.switchTo(i, { type: 'click' })}
+              >
+                <Text style={tabStyles.itemTxt}>{item.name}</Text>
+              </View>
+            );
+          })}
+        </View>
+      </ScrollView>
+    );
   }
 }
-
 
 class App extends Component {
   constructor(props) {
@@ -191,57 +230,62 @@ class App extends Component {
     this.tabBar = createRef();
   }
 
-  state = {}
+  state = {};
 
-  componentWillMount() {
+  componentWillMount() {}
 
-  }
-
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   getTabBlockRef = () => {
     return this.tab.current.refs.block;
-  }
+  };
 
-  beforeTabBarSwitch = (e) => {
+  beforeTabBarSwitch = e => {
     // console.log(111);
     this.tab.current.switchTo(e.index);
-  }
+  };
 
-  afterTabBarSwitch = (e) => {
+  afterTabBarSwitch = e => {};
 
-  }
-
-  beforeTabSwitch = (e) => {
+  beforeTabSwitch = e => {
     if (e.type === 'click') {
       // console.log(1);
       this.tabBar.current.switchTo(e.index);
     }
-  }
+  };
 
   render() {
     return (
-      <View style={{width: 750, position: 'absolute', top: 0, bottom: 0}}>
-        <Tab itemWidths={tabItemWidth} itemData={itemData} style={tabStyles.container} ref={this.tab}
-          beforeSwitch={this.beforeTabSwitch} />
-                <TabController isPanEnabled={true} isSlideEnabled={true} style={styles.tabBar} ref={this.tabBar}
+      <View style={{ width: 750, position: 'absolute', top: 0, bottom: 0 }}>
+        <Tab
+          itemWidths={tabItemWidth}
+          itemData={itemData}
+          style={tabStyles.container}
+          ref={this.tab}
+          beforeSwitch={this.beforeTabSwitch}
+        />
+        <TabController
+          isPanEnabled={true}
+          isSlideEnabled={true}
+          style={styles.tabBar}
+          ref={this.tabBar}
           beforeSwitch={this.beforeTabBarSwitch}
-          afterSwitch={this.afterTabBarSwitch}>
+          afterSwitch={this.afterTabBarSwitch}
+        >
           <TabPanel style={styles.page}>
-            <TabPanelView style={{flex:1}}>{1}</TabPanelView>
+            <TabPanelView style={{ flex: 1 }}>{1}</TabPanelView>
           </TabPanel>
           <TabPanel style={styles.page}>
-          <Text>2</Text>
+            <Text>2</Text>
           </TabPanel>
           <TabPanel style={styles.page}>
-          <Text>3</Text>
+            <Text>3</Text>
           </TabPanel>
           <TabPanel style={styles.page}>
-          <Text>4</Text>
+            <Text>4</Text>
           </TabPanel>
           <TabPanel style={styles.page}>
-          <Text>5</Text>
+            <Text>5</Text>
           </TabPanel>
         </TabController>
       </View>

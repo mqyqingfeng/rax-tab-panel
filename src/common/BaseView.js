@@ -2,9 +2,9 @@
 
 'use strict';
 
-import {Component} from 'rax';
+import { Component } from 'rax';
 import TabPanel from './TabPanel';
-import {findIndex} from './Utils';
+import { findIndex } from './Utils';
 
 class BaseView extends Component {
   itemWidth = 750;
@@ -15,24 +15,24 @@ class BaseView extends Component {
 
   switchTo = () => {
     // no impl
-  }
+  };
 
-  renderPanel = (index) => {
+  renderPanel = index => {
     if (this.refs[`panel_${index}`]) {
       this.refs[`panel_${index}`].show();
     }
-  }
+  };
 
-  destroyPanel = (index) => {
+  destroyPanel = index => {
     if (this.refs[`panel_${index}`]) {
       this.refs[`panel_${index}`].hide();
     }
-  }
+  };
 
   countItems(props = this.props) {
     this.itemCount = 0;
     let children = props.children.length > 0 ? props.children : [props.children];
-    children.map((child) => {
+    children.map(child => {
       if (child && child.type === TabPanel) {
         this.itemCount++;
       }
@@ -40,11 +40,14 @@ class BaseView extends Component {
   }
 
   handleScreens = () => {
-    let {screenNumbersPerSide} = this.props;
-    let {itemCount, curIndex} = this;
+    let { screenNumbersPerSide } = this.props;
+    let { itemCount, curIndex } = this;
     let visibleIndexes = [];
     if (screenNumbersPerSide === 0 || screenNumbersPerSide > 0) {
-      let max = curIndex + screenNumbersPerSide > itemCount - 1 ? itemCount - 1 : curIndex + screenNumbersPerSide;
+      let max =
+        curIndex + screenNumbersPerSide > itemCount - 1
+          ? itemCount - 1
+          : curIndex + screenNumbersPerSide;
       let min = curIndex - screenNumbersPerSide < 0 ? 0 : curIndex - screenNumbersPerSide;
       for (let i = min; i < curIndex; i++) {
         visibleIndexes.push(i);
@@ -53,14 +56,16 @@ class BaseView extends Component {
         visibleIndexes.push(i);
       }
       for (let i = 0; i < itemCount; i++) {
-        if (findIndex(visibleIndexes, (o) => {
-          return o === i;
-        }) === -1) {
+        if (
+          findIndex(visibleIndexes, o => {
+            return o === i;
+          }) === -1
+        ) {
           this.destroyPanel(i);
         }
       }
     }
-  }
+  };
 }
 
 export default BaseView;
