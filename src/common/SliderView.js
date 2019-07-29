@@ -2,10 +2,10 @@
 
 'use strict';
 
-import {createElement} from 'rax';
+import { createElement } from 'rax';
 import BaseView from './BaseView';
-import {TabPanel} from './index';
-import {noop} from './Utils';
+import { TabPanel } from '../index';
+import { noop } from './Utils';
 
 class SliderView extends BaseView {
   static defaultProps = {
@@ -19,19 +19,18 @@ class SliderView extends BaseView {
     params: {},
     prevIndex: null,
     index: this.props.defaultFocusIndex
-  }
+  };
 
   curIndex = this.props.defaultFocusIndex;
   isScrolling = false;
   itemCount = 0;
 
-
   state = {
     index: 0
-  }
+  };
 
-  onChange = (e) => {
-    let {beforeSwitch = noop} = this.props;
+  onChange = e => {
+    let { beforeSwitch = noop } = this.props;
     this.params = {
       params: {},
       index: e.index,
@@ -41,27 +40,25 @@ class SliderView extends BaseView {
     this.curIndex = e.index;
     this.renderPanel(this.curIndex);
     this.prevIndex = e.index;
-  }
+  };
 
   afterSwitch = () => {
-    let {afterSwitch = noop} = this.props;
+    let { afterSwitch = noop } = this.props;
     afterSwitch(this.params);
     this.handleScreens();
-  }
+  };
 
-
-  switchTo = (index) => {
+  switchTo = index => {
     if (this.refs.container) {
       this.setState({
         index
       });
     }
-  }
-
+  };
 
   componentDidMount() {
     this.countItems();
-    let {defaultFocusIndex = 0} = this.props;
+    let { defaultFocusIndex = 0 } = this.props;
 
     if (defaultFocusIndex !== this.state.index) {
       this.switchTo(defaultFocusIndex);
@@ -83,10 +80,10 @@ class SliderView extends BaseView {
       this.isScrolling = false;
       this.afterSwitch();
     }, 500);
-  }
+  };
 
   render() {
-    let {isPanEnabled} = this.props;
+    let { isPanEnabled } = this.props;
     let curIndex = this.curIndex;
 
     if (this.props.children && !(this.props.children instanceof Array)) {
@@ -96,24 +93,34 @@ class SliderView extends BaseView {
     let children = this.props.children.map((child, index) => {
       if (child.type === TabPanel) {
         return (
-          <TabPanel index={index} curIndex={curIndex} isAppear={index == this.curIndex ? true : false} {...child.props}
-            ref={`panel_${index}`} />);
+          <TabPanel
+            index={index}
+            curIndex={curIndex}
+            isAppear={index == this.curIndex ? true : false}
+            {...child.props}
+            ref={`panel_${index}`}
+          />
+        );
       } else {
         return child;
       }
     });
 
-    return (<slider {...this.props}
-      index={this.state.index}
-      scrollable={isPanEnabled}
-      autoPlay={false}
-      infinite={false}
-      showIndicators={false}
-      onScroll={this.onScroll}
-      ref="container"
-      onChange={this.onChange}>
-      {children}
-    </slider>);
+    return (
+      <slider
+        {...this.props}
+        index={this.state.index}
+        scrollable={isPanEnabled}
+        autoPlay={false}
+        infinite={false}
+        showIndicators={false}
+        onScroll={this.onScroll}
+        ref="container"
+        onChange={this.onChange}
+      >
+        {children}
+      </slider>
+    );
   }
 }
 

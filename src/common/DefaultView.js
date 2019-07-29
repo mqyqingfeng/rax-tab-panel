@@ -33,14 +33,14 @@ const styles = {
     position: 'absolute',
     top: 0,
     bottom: 0,
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   wrap: {
     position: 'absolute',
     flexDirection: 'row',
     top: 0,
-    bottom: 0,
-  },
+    bottom: 0
+  }
 };
 
 class DefaultView extends BaseView {
@@ -68,20 +68,20 @@ class DefaultView extends BaseView {
     beforeExpressionBind: noop,
     pageConfig: [],
     defaultFocusIndex: 0,
-    forbidSwipeBackOnIOS: 'auto',
+    forbidSwipeBackOnIOS: 'auto'
   };
 
   static contextTypes = {
     isInATabPanel: PropTypes.bool,
     uuid: PropTypes.number,
     isInATabPanelDefaultView: PropTypes.bool,
-    parentDefaultView: PropTypes.Component,
+    parentDefaultView: PropTypes.Component
   };
 
   getChildContext() {
     return {
       isInATabPanelDefaultView: true,
-      parentDefaultView: this,
+      parentDefaultView: this
     };
   }
 
@@ -158,14 +158,12 @@ class DefaultView extends BaseView {
       this.handleSwipeBack();
     };
 
-    // console.log(1111);
-
     if (duration === 1) {
       setNativeProps(wrap, {
         style: {
           transform: `translateX(${end}rem)`,
-          webkitTransform: `translateX(${end}rem)`,
-        },
+          webkitTransform: `translateX(${end}rem)`
+        }
       });
       return callback();
     }
@@ -174,14 +172,14 @@ class DefaultView extends BaseView {
       wrap,
       {
         transform: `translateX(${end}rem)`,
-        webkitTransform: `translateX(${end}rem)`,
+        webkitTransform: `translateX(${end}rem)`
       },
       {
         timingFunction: this.props.easing,
         delay: 0,
-        duration: Math.max(this.props.isSlideEnabled ? duration : 0, MIN_DURATION),
+        duration: Math.max(this.props.isSlideEnabled ? duration : 0, MIN_DURATION)
       },
-      callback,
+      callback
     );
   };
 
@@ -206,7 +204,7 @@ class DefaultView extends BaseView {
       origin: `x+${this.x}`,
       transformed: `{\"type\":\"+\",\"children\":[{\"type\":\"Identifier\",\"value\":\"x\"},{\"type\":\"NumericLiteral\",\"value\":${
         this.x
-      }}]}`,
+      }}]}`
     };
     if (this.curIndex === 0) {
       // left edge bounce
@@ -234,9 +232,9 @@ class DefaultView extends BaseView {
       {
         element: this.wrap.current,
         property: 'transform.translateX',
-        expression: expression,
+        expression: expression
       },
-      ...extraBindingProps,
+      ...extraBindingProps
     ];
 
     props.forEach(prop => {
@@ -250,9 +248,9 @@ class DefaultView extends BaseView {
         anchor: getEl(anchor),
         eventType: 'pan',
         options: {
-          touchAction: 'pan-x',
+          touchAction: 'pan-x'
         },
-        props,
+        props
       },
       e => {
         if (e.state == 'end') {
@@ -261,12 +259,12 @@ class DefaultView extends BaseView {
             binding.unbind({
               token: this.token,
               eventType: 'pan',
-              anchor: getEl(anchor),
+              anchor: getEl(anchor)
             });
           }
         }
         this.onPanCallback(e);
-      },
+      }
     );
 
     this.token = res && res.token;
@@ -278,7 +276,7 @@ class DefaultView extends BaseView {
       const dist = e.deltaX;
       const panDist = this.props.panDist ? this.props.panDist : this.itemWidth / 2;
       let newIndex = this.curIndex;
-      if (Math.abs(dist) > panDist || (Math.abs(dist) / duration > 0.5 && duration < 200)) {
+      if (Math.abs(dist) > panDist || Math.abs(dist) / duration > 0.5 && duration < 200) {
         if (dist > 0) {
           newIndex--;
         } else {
@@ -332,7 +330,10 @@ class DefaultView extends BaseView {
         }
       });
 
-    let wrapProps = !Detection.isEnableSliderAndroid && isPanEnabled ? { onHorizontalPan: this.onHorizontalPan } : {};
+    let wrapProps =
+      !Detection.isEnableSliderAndroid && isPanEnabled
+        ? { onHorizontalPan: this.onHorizontalPan }
+        : {};
 
     return (
       <View {...this.props} style={combineStyle(styles.container, this.props.style)}>
