@@ -2,7 +2,7 @@
 
 'use strict';
 
-import { createElement, setNativeProps, createRef } from 'rax';
+import { createElement, createRef } from 'rax';
 import View from 'rax-view';
 import { isWeex } from 'universal-env';
 import binding from 'weex-bindingx';
@@ -15,7 +15,16 @@ import PanView from './PanView';
 import PropTypes from 'rax-proptypes';
 import findDOMNode from 'rax-find-dom-node';
 
-// console.log(setNativeProps);
+function setStyles(node, styles) {
+  for (let key in styles) {
+    let val = styles[key];
+    if (isWeex) {
+      node.setStyle(key, val);
+    } else {
+      node.style[key] = val;
+    }
+  }
+}
 
 function getEl(el) {
   return isWeex ? findDOMNode(el).ref : findDOMNode(el);
@@ -158,12 +167,10 @@ class DefaultView extends BaseView {
       this.handleSwipeBack();
     };
 
-    if (duration === 1) {
-      setNativeProps(wrap, {
-        style: {
-          transform: `translateX(${end}rem)`,
-          webkitTransform: `translateX(${end}rem)`
-        }
+    if (duration === 0) {
+      setStyles(wrap, {
+        transform: `translateX(${end}rem)`,
+        webkitTransform: `translateX(${end}rem)`
       });
       return callback();
     }
