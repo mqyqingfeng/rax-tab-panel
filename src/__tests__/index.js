@@ -1,12 +1,10 @@
 /* eslint-env jest */
-import {
-    createElement
-} from 'rax';
+import { createElement } from 'rax';
 import renderer from 'rax-test-renderer';
-import RaxTabPanel from '../';
+import { TabController } from '../index';
 
-describe('RaxTabPanel', () => {
-    it('typeof RaxTabPanel is "function"', () => {
-        expect(typeof RaxTabPanel).toEqual('function');
-    });
+describe('TabController', () => {
+  it('typeof TabController is "function"', () => {
+    expect(typeof TabController).toEqual('function');
+  });
 });

@@ -12,7 +12,7 @@
     "prepublishOnly": "npm run build",
     "miniapp": "rax-scripts start --type 'component-miniapp'",
     "test": "rax-scripts test",
-    "lint": "eslint --ext .js --ext .jsx --ext .ts --ext .tsx ./src"
+    "lint": "eslint --ext .js --ext .jsx --ext .ts --ext .tsx ./src --fix"
   },
   "keywords": [
     "Rax",
